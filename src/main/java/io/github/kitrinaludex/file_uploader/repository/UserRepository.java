@@ -15,4 +15,14 @@ public class UserRepository {
         String sql = "SELECT * FROM users WHERE username = ?";
        return jdbcTemplate.queryForObject(sql,new UserMapper(),username);
     }
+
+    public boolean exists(String username) {
+        String sql = "SELECT EXISTS(SELECT 1 FROM users WHERE username = ?)";
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, username));
+    }
+
+    public void save(User user) {
+        String sql = "INSERT INTO users(username,password) VALUES(?,?)";
+        jdbcTemplate.update(sql,user.getUsername(),user.getPassword());
+    }
 }
