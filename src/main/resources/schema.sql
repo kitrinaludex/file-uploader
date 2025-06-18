@@ -9,4 +9,4 @@ CREATE TABLE files(
 uuid TEXT PRIMARY KEY,
 name TEXT,
 owner TEXT,
-localPath TEXT)
+folder TEXT);

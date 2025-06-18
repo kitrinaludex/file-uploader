@@ -4,6 +4,7 @@ import io.github.kitrinaludex.file_uploader.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,10 +24,10 @@ public class UploadService {
     FileRepository fileRepository;
 
     public ResponseEntity<?> uploadFile(MultipartFile file) throws IOException {
-
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String uuid = UUID.randomUUID().toString();
         file.transferTo(new File(uploadDirectory + uuid));
-        fileRepository.save(file.getOriginalFilename(),uuid);
+        fileRepository.save(file.getOriginalFilename(),uuid,username);
 
         return ResponseEntity.ok("file uploaded");
     }
