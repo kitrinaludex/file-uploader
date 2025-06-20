@@ -2,13 +2,23 @@ package io.github.kitrinaludex.file_uploader.dto;
 
 public class UserFile {
     private String name;
+    private String type;
     private String url;
     private String uuid;
 
-    public UserFile(String name, String url,String uuid) {
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public UserFile(String name, String type, String url, String uuid) {
         this.name = name;
-        this.uuid = uuid;
+        this.type = type;
         this.url = url;
+        this.uuid = uuid;
     }
 
     public void setName(String name) {
