@@ -25,16 +25,13 @@ public class UploadController {
         return uploadService.uploadFile(file,parentUuid);
     }
 
-    @GetMapping("/files")
-    public ResponseEntity<?> getFolder(@RequestParam(required = false,value = "folderUuid") String uuid) {
 
-        return ResponseEntity.ok(uploadService.getFolder(uuid));
-    }
 
     @PostMapping("/folders")
-    public ResponseEntity<?> createFolder(@RequestParam String name,@RequestParam(required = false) String parentUuid){
-        uploadService.createFolder(name,parentUuid);
-       return ResponseEntity.ok("folder created");
+    public ResponseEntity<?> createFolder(@RequestParam String name,@RequestParam(required = false) String parentUuid) throws Exception {
+       String uuid = uploadService.createFolder(name,parentUuid);
+        //todo: create a folder with name "new folder" if no name is provided
+       return ResponseEntity.ok("folder created:" + uuid);
     }
 
 

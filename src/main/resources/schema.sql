@@ -15,4 +15,5 @@ CREATE TABLE folders(
 uuid TEXT PRIMARY KEY,
 name TEXT,
 owner TEXT,
-parent_uuid TEXT);
+parent_uuid TEXT,
+path TEXT);

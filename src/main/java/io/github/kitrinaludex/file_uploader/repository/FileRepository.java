@@ -36,14 +36,5 @@ public class FileRepository {
         jdbcTemplate.update(sql,name,username,UUID.randomUUID(),parentUuid);
     }
 
-    public List<UserFile> getFolder(String uuid) {
 
-        String sql = "SELECT * FROM folders WHERE parent_uuid = ?";
-        String sql2 = "SELECT * FROM files WHERE folder = ?";
-
-        List<UserFile> folders = jdbcTemplate.query(sql,new FolderMapper(),uuid);
-        List<UserFile> files = jdbcTemplate.query(sql2,new FileMapper(),uuid);
-
-        return Stream.concat(folders.stream(),files.stream()).collect(Collectors.toList());
-    }
 }
