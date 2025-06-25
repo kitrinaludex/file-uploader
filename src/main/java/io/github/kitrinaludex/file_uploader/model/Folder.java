@@ -1,5 +1,7 @@
 package io.github.kitrinaludex.file_uploader.model;
 
+import io.github.kitrinaludex.file_uploader.dto.UserFile;
+
 import java.time.Instant;
 
 public class Folder {
@@ -59,5 +61,9 @@ public class Folder {
 
     public String getUuid() {
         return uuid;
+    }
+
+    public UserFile toDto() {
+        return new UserFile(getName(),"folder","a",getUuid());
     }
 }
