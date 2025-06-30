@@ -15,8 +15,7 @@ public class FileViewController {
 
     @GetMapping("/files")
     public ResponseEntity<?> getFolder(@RequestParam(required = false)String folder){
-        return ResponseEntity.ok(viewService.getFolder(folder));
-        //FIXME:root folders arent shown
+        return ResponseEntity.ok("not yet");
     }
 
 

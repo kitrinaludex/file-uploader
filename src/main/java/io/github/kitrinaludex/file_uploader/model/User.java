@@ -1,6 +1,7 @@
 package io.github.kitrinaludex.file_uploader.model;
 
 public class User {
+    public String rootUuid;
     private long id;
     private String username;
     private String password;
@@ -10,10 +11,19 @@ public class User {
         this.username = username;
     }
 
-    public User(long id, String password, String username) {
+    public User(long id, String password, String rootUuid, String username) {
         this.id = id;
         this.password = password;
+        this.rootUuid = rootUuid;
         this.username = username;
+    }
+
+    public void setRootUuid(String rootUuid) {
+        this.rootUuid = rootUuid;
+    }
+
+    public String getRootUuid() {
+        return rootUuid;
     }
 
     public void setId(long id) {

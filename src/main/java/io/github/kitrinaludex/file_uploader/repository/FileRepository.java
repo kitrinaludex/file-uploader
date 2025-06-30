@@ -3,11 +3,13 @@ package io.github.kitrinaludex.file_uploader.repository;
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
 import io.github.kitrinaludex.file_uploader.model.Folder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -16,27 +18,46 @@ public class FileRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public void save(String filename,String uuid,String username,String folderUuid) {
+    public void saveFile(String filename,String uuid,String username,String folderUuid) {
         username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         String sql = "INSERT INTO files(name,uuid,owner,folder) VALUES(?,?,?,?)";
         jdbcTemplate.update(sql,filename,uuid,username,folderUuid);
     }
 
-    public List<UserFile> getRoot(String username) {
 
-        String sql = "SELECT * FROM files WHERE owner = ? AND folder = ''";
-        return jdbcTemplate.query(sql,new FileMapper(),username);
+    public void createFolder(String name,String uuid,String parentUuid,String path){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String sql = "INSERT INTO folders(name,uuid,parent_uuid,path,owner) VALUES(?,?,?,?,?)";
+
+        jdbcTemplate.update(sql,name,uuid,parentUuid,path,username);
     }
 
-    public void createFolder(String name, String username, String parentUuid) {
-        username = SecurityContextHolder.getContext().getAuthentication().getName();
+    public void createRoot(String username,String name,String uuid,String parentUuid,String path){
 
-        String sql = "INSERT INTO folders(name,owner,uuid,parent_uuid) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO folders(name,uuid,parent_uuid,path,owner) VALUES(?,?,?,?,?)";
 
-        jdbcTemplate.update(sql,name,username,UUID.randomUUID(),parentUuid);
+        jdbcTemplate.update(sql,name,uuid,parentUuid,path,username);
     }
 
+    public Optional<Folder> findFolderByUuid(String uuid) {
+
+        String sql = "SELECT * FROM folders WHERE uuid = ?";
+
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new FolderMapper(), uuid));
+        }catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    public String getRootByUsername(String username) {
+
+        String sql = "SELECT root_folder_uuid FROM users WHERE username = ?";
+
+        return jdbcTemplate.queryForObject(sql,String.class,username);
+    }
 
     public List<Folder> getFolderList(String folderUuid) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

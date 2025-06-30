@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS users,files,folders;
 CREATE TABLE users(
 id SERIAL PRIMARY KEY,
 username TEXT,
-password TEXT);
+password TEXT,
+root_folder_uuid TEXT);
 
 CREATE TABLE files(
 uuid TEXT PRIMARY KEY,

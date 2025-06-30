@@ -3,14 +3,12 @@ package io.github.kitrinaludex.file_uploader.controller;
 import io.github.kitrinaludex.file_uploader.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
 
 @RestController
 public class UploadController {
@@ -22,7 +20,7 @@ public class UploadController {
     public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile
                                     file, @RequestParam(required = false, value="parent")String parentUuid) throws IOException {
 
-        return uploadService.uploadFile(file,parentUuid);
+        return uploadService.saveFile(file,parentUuid);
     }
 
 
@@ -30,6 +28,7 @@ public class UploadController {
     @PostMapping("/folders")
     public ResponseEntity<?> createFolder(@RequestParam String name,@RequestParam(required = false) String parentUuid) throws Exception {
        String uuid = uploadService.createFolder(name,parentUuid);
+
         //todo: create a folder with name "new folder" if no name is provided
        return ResponseEntity.ok("folder created:" + uuid);
     }

@@ -1,5 +1,6 @@
 package io.github.kitrinaludex.file_uploader.repository;
 
+import io.github.kitrinaludex.file_uploader.model.Folder;
 import io.github.kitrinaludex.file_uploader.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,7 +23,8 @@ public class UserRepository {
     }
 
     public void save(User user) {
-        String sql = "INSERT INTO users(username,password) VALUES(?,?)";
-        jdbcTemplate.update(sql,user.getUsername(),user.getPassword());
+        String sql = "INSERT INTO users(username,password,root_folder_uuid) VALUES(?,?,?)";
+        jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getRootUuid());
     }
+
 }
