@@ -32,19 +32,25 @@ public class UploadService {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        String rootUuid = fileRepository.getRootByUsername(username);
+
+        String parentPath = "/";
+
         if (parentUuid == null) {
-            parentUuid = fileRepository.getRootByUsername(username);
+            parentUuid = rootUuid;
+        }
+
+        if (parentUuid != null) {
+            Folder parent = fileRepository.findFolderByUuid(parentUuid).orElseThrow(()
+                    -> new ResourceAccessException("Parent folder not found"));
+            parentPath = parent.getPath();
         }
 
         String uuid = UUID.randomUUID().toString();
-        Optional<Folder> parent = fileRepository.findFolderByUuid(parentUuid);
 
         try {
-            if (parent.isEmpty()) {
-                return ResponseEntity.badRequest().body("orphan file");
-            }
 
-            file.transferTo(new File(uploadDirectory + "/" + parentUuid + "/" + uuid));
+            file.transferTo(new File(uploadDirectory + rootUuid + parentPath + uuid));
             fileRepository.saveFile(file.getOriginalFilename(),uuid,username,parentUuid);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
@@ -65,6 +71,11 @@ public class UploadService {
             Folder parent = fileRepository.findFolderByUuid(parentUuid).orElseThrow(()
                     -> new ResourceAccessException("Parent folder not found"));
             parentPath = parent.getPath();
+        }
+
+        if (parentUuid == null) {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            parentUuid = fileRepository.getRootByUsername(username);
         }
 
         String newPath = parentPath + uuid + "/";
