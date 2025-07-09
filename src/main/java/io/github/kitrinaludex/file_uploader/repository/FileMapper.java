@@ -12,6 +12,6 @@ public class FileMapper implements RowMapper<UserFile> {
 
     @Override
     public UserFile mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new UserFile(rs.getString("name"),"file","a",rs.getString("uuid"));
+        return new UserFile(rs.getString("name"),"file",rs.getString("uuid"));
     }
 }

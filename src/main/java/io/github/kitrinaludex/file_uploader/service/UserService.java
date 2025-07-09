@@ -58,4 +58,7 @@ public class UserService {
     }
 
 
+    public String getRootUuid(String username) {
+        return userRepository.getUserByUsername(username).getRootUuid();
+    }
 }

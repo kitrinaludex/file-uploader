@@ -64,6 +64,6 @@ public class Folder {
     }
 
     public UserFile toDto() {
-        return new UserFile(getName(),"folder","a",getUuid());
+        return new UserFile(getName(),"folder",getUuid());
     }
 }

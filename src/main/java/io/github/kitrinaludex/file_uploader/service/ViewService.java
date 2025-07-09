@@ -1,5 +1,6 @@
 package io.github.kitrinaludex.file_uploader.service;
 
+import io.github.kitrinaludex.file_uploader.dto.FolderDto;
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
 import io.github.kitrinaludex.file_uploader.model.Folder;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
@@ -19,8 +20,9 @@ public class ViewService {
     @Autowired
     JdbcUserDetailsService jdbcUserDetailsService;
 
-    public List<UserFile> getFolder(String uuid) {
+    public FolderDto getFolder(String uuid) {
 
+        String name = "testName";
         List<Folder> folders = fileRepository.getFolderList(uuid);;
         List<UserFile> files = fileRepository.getFileList(uuid);
 
@@ -32,7 +34,7 @@ public class ViewService {
 
         convertedFolders.addAll(files);
 
-        return convertedFolders;
+        return new FolderDto(name,convertedFolders);
 
     }
 
