@@ -75,4 +75,11 @@ public class FileRepository {
 
         return jdbcTemplate.query(sql,new FileMapper(),username,folderUuid);
     }
+
+    public String getFilePath(String uuid) {
+
+        String sql = "SELECT path FROM files WHERE uuid = ?";
+
+        return jdbcTemplate.queryForObject(sql,String.class,uuid);
+    }
 }
