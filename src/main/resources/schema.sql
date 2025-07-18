@@ -19,3 +19,8 @@ name TEXT,
 owner TEXT,
 parent_uuid TEXT,
 path TEXT);
+
+CREATE TABLE folder_permissions(
+id SERIAL PRIMARY KEY,
+username TEXT,
+folder_uuid TEXT);
