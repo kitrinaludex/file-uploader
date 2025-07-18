@@ -10,7 +10,8 @@ CREATE TABLE files(
 uuid TEXT PRIMARY KEY,
 name TEXT,
 owner TEXT,
-folder TEXT);
+folder TEXT,
+path TEXT);
 
 CREATE TABLE folders(
 uuid TEXT PRIMARY KEY,

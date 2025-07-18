@@ -51,7 +51,7 @@ public class UploadService {
         try {
 
             file.transferTo(new File(uploadDirectory + rootUuid + parentPath + uuid));
-            fileRepository.saveFile(file.getOriginalFilename(),uuid,username,parentUuid);
+            fileRepository.saveFile(file.getOriginalFilename(),uuid,username,parentUuid,parentPath);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
         }
@@ -70,8 +70,14 @@ public class UploadService {
         if (parentUuid != null) {
             Folder parent = fileRepository.findFolderByUuid(parentUuid).orElseThrow(()
                     -> new ResourceAccessException("Parent folder not found"));
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            if (!(parent.getOwnerUuid().equals(userRepository.getUserByUsername(username).getUsername()))){
+                throw new ResourceAccessException("Access Denied");
+            }
             parentPath = parent.getPath();
         }
+
+
 
         if (parentUuid == null) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();

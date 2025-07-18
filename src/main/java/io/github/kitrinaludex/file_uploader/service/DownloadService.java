@@ -26,9 +26,9 @@ public class DownloadService {
     public Resource download(String uuid) throws MalformedURLException {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-//        uuid = fileRepository.getFilePath(uuid);
+        String path = fileRepository.getFilePath(uuid);
         Path pathToFile = Path.of(uploadDirectory + "/" +
-                userService.getRootUuid(username) + "/" + uuid);
+                userService.getRootUuid(username) + "/" + path + uuid);
 
         return new UrlResource(pathToFile.toUri());
 

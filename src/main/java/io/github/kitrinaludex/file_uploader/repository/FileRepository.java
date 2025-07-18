@@ -18,11 +18,11 @@ public class FileRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public void saveFile(String filename,String uuid,String username,String folderUuid) {
+    public void saveFile(String filename,String uuid,String username,String folderUuid,String path) {
         username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        String sql = "INSERT INTO files(name,uuid,owner,folder) VALUES(?,?,?,?)";
-        jdbcTemplate.update(sql,filename,uuid,username,folderUuid);
+        String sql = "INSERT INTO files(name,uuid,owner,folder,path) VALUES(?,?,?,?,?)";
+        jdbcTemplate.update(sql,filename,uuid,username,folderUuid,path);
     }
 
 
