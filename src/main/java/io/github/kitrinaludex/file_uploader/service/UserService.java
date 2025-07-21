@@ -3,6 +3,7 @@ package io.github.kitrinaludex.file_uploader.service;
 import io.github.kitrinaludex.file_uploader.dto.SignupRequest;
 import io.github.kitrinaludex.file_uploader.model.User;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
+import io.github.kitrinaludex.file_uploader.repository.PermissionRepository;
 import io.github.kitrinaludex.file_uploader.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,8 @@ public class UserService {
 
     @Autowired
     private UploadService   uploadService;
+    @Autowired
+    PermissionRepository permissionRepository;
 
 
     public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
@@ -41,6 +44,7 @@ public class UserService {
         String rootUuid = UUID.randomUUID().toString();
         try {
             new File(uploadDirectory + "/" + rootUuid).mkdir();
+            permissionRepository.giveAccessToFolder(signupRequest.getUsername(),rootUuid);
         }catch (Exception e) {
             ResponseEntity.badRequest().body("couldnt create directory");
         }

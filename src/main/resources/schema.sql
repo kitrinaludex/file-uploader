@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users,files,folders;
+DROP TABLE IF EXISTS users,files,folders,folder_permissions;
 
 CREATE TABLE users(
 id SERIAL PRIMARY KEY,

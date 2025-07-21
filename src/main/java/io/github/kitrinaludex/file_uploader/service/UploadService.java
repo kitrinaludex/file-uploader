@@ -77,7 +77,7 @@ public class UploadService {
             Folder parent = fileRepository.findFolderByUuid(parentUuid).orElseThrow(()
                     -> new ResourceAccessException("Parent folder not found"));
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            if (!(parent.getOwnerUuid().equals(userRepository.getUserByUsername(username).getUsername()))){
+            if (!(permissionRepository.hasAccessToFolder(parentUuid))){
                 throw new ResourceAccessException("Access Denied");
             }
             parentPath = parent.getPath();
@@ -100,9 +100,9 @@ public class UploadService {
             new File( uploadDirectory + fileRepository.getRootByUsername(username) + newPath).mkdir();
 
             fileRepository.createFolder(name,uuid,parentUuid,newPath);
-            permissionRepository.giveAccessToFolder(uuid);
+            permissionRepository.giveAccessToFolder(username,uuid);
         }catch (Exception e) {
-            return "folder creation error";
+            System.out.println(e.getMessage());
         }
 
         return uuid;
