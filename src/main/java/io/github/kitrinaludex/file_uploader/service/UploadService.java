@@ -1,5 +1,7 @@
 package io.github.kitrinaludex.file_uploader.service;
 
+import io.github.kitrinaludex.file_uploader.exception.FolderNotFoundException;
+import io.github.kitrinaludex.file_uploader.exception.NoFolderAccessException;
 import io.github.kitrinaludex.file_uploader.model.Folder;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
 import io.github.kitrinaludex.file_uploader.repository.PermissionRepository;
@@ -46,10 +48,10 @@ public class UploadService {
 
         if (parentUuid != null) {
             Folder parent = fileRepository.findFolderByUuid(parentUuid).orElseThrow(()
-                    -> new ResourceAccessException("Parent folder not found"));
+                    -> new FolderNotFoundException("Parent folder not found"));
 
             if (!(permissionRepository.hasAccessToFolder(parentUuid))) {
-                throw new AccessDeniedException("No access to parent folder");
+                throw new NoFolderAccessException("No access to parent folder");
             }
 
             parentPath = parent.getPath();
@@ -62,7 +64,7 @@ public class UploadService {
             file.transferTo(new File(uploadDirectory + rootUuid + parentPath + uuid));
             fileRepository.saveFile(file.getOriginalFilename(),uuid,username,parentUuid,parentPath);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return ResponseEntity.ok("file uploaded");
@@ -73,13 +75,16 @@ public class UploadService {
         String uuid = java.util.UUID.randomUUID().toString();
 
         String parentPath = "/";
+
         if (parentUuid != null) {
+
             Folder parent = fileRepository.findFolderByUuid(parentUuid).orElseThrow(()
-                    -> new ResourceAccessException("Parent folder not found"));
-            String username = SecurityContextHolder.getContext().getAuthentication().getName();
-            if (!(permissionRepository.hasAccessToFolder(parentUuid))){
-                throw new ResourceAccessException("Access Denied");
-            }
+                    -> new FolderNotFoundException("Parent folder not found"));
+
+            if (!(permissionRepository.hasAccessToFolder(parentUuid))) {
+                    throw new NoFolderAccessException("No access to parent folder");
+                }
+
             parentPath = parent.getPath();
         }
 
