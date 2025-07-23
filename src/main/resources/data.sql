@@ -1,1 +1,1 @@
-INSERT INTO users(username,password) VALUES('john','12345');
+INSERT INTO users(uuid,username,password) VALUES(1,'john','12345');

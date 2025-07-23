@@ -1,6 +1,8 @@
 package io.github.kitrinaludex.file_uploader.service;
 
 import io.github.kitrinaludex.file_uploader.dto.SignupRequest;
+import io.github.kitrinaludex.file_uploader.exception.FolderCreationException;
+import io.github.kitrinaludex.file_uploader.exception.UsernameAlreadyExistsException;
 import io.github.kitrinaludex.file_uploader.model.User;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
 import io.github.kitrinaludex.file_uploader.repository.PermissionRepository;
@@ -38,7 +40,7 @@ public class UserService {
 
     public ResponseEntity<?> registerUser(SignupRequest signupRequest) throws Exception {
         if (userRepository.exists(signupRequest.getUsername())) {
-            return ResponseEntity.badRequest().body("Username is already taken");
+            throw new UsernameAlreadyExistsException("username already exists");
         }
 
         String rootUuid = UUID.randomUUID().toString();
@@ -46,13 +48,14 @@ public class UserService {
             new File(uploadDirectory + "/" + rootUuid).mkdir();
             permissionRepository.giveAccessToFolder(signupRequest.getUsername(),rootUuid);
         }catch (Exception e) {
-            ResponseEntity.badRequest().body("couldnt create directory");
+            throw new FolderCreationException("couldn't create user root folder");
         }
         fileRepository.createRoot(signupRequest.getUsername(),"My files",
                 rootUuid,"","/" );
 
         User user = new User(
-            1,passwordEncoder.encode(signupRequest.getPassword()),rootUuid,
+                UUID.randomUUID().toString(),
+          passwordEncoder.encode(signupRequest.getPassword()),rootUuid,
             signupRequest.getUsername()
     );
 

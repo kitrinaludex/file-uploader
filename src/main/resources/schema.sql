@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS users,files,folders,folder_permissions;
 
 CREATE TABLE users(
-id SERIAL PRIMARY KEY,
+uuid TEXT PRIMARY KEY,
 username TEXT,
 password TEXT,
 root_folder_uuid TEXT);

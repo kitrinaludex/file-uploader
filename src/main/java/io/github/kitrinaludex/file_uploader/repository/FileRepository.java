@@ -76,10 +76,15 @@ public class FileRepository {
         return jdbcTemplate.query(sql,new FileMapper(),username,folderUuid);
     }
 
-    public String getFilePath(String uuid) {
+    public Optional<String> getFilePath(String username,String uuid) {
 
-        String sql = "SELECT path FROM files WHERE uuid = ?";
+        String sql = "SELECT path FROM files WHERE uuid = ? AND owner = ?";
 
-        return jdbcTemplate.queryForObject(sql,String.class,uuid);
+
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql,String.class,uuid,username));
+        }catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 }
