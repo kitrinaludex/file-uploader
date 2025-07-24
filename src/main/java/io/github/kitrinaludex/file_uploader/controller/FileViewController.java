@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FileViewController {
 
-    @Autowired
     ViewService viewService;
-    @Autowired
     UserService userService;
+
+    public FileViewController(UserService userService, ViewService viewService) {
+        this.userService = userService;
+        this.viewService = viewService;
+    }
 
     @GetMapping("/files")
     public ResponseEntity<?> getFolder(@RequestParam(required = false) String folder){

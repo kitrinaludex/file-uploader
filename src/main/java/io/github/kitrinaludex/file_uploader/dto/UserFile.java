@@ -5,9 +5,6 @@ public class UserFile {
     private String type;
     private String uuid;
 
-
-
-
     public UserFile(String name, String type, String uuid) {
         this.name = name;
         this.type = type;

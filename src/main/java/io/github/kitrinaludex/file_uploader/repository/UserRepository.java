@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserRepository {
 
-
-    @Autowired
     JdbcTemplate jdbcTemplate;
+
+    public UserRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public User getUserByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";

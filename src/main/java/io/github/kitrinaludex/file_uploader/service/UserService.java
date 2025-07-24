@@ -18,23 +18,19 @@ import java.util.UUID;
 
 @Service
 public class UserService {
+
     @Value("${uploadDirectory}")
     private String uploadDirectory;
 
     private final UserRepository userRepository;
-
-    @Autowired
     FileRepository fileRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UploadService   uploadService;
-    @Autowired
     PermissionRepository permissionRepository;
 
-
-    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserService(FileRepository fileRepository, PasswordEncoder passwordEncoder, PermissionRepository permissionRepository,UserRepository userRepository) {
+        this.fileRepository = fileRepository;
         this.passwordEncoder = passwordEncoder;
+        this.permissionRepository = permissionRepository;
         this.userRepository = userRepository;
     }
 

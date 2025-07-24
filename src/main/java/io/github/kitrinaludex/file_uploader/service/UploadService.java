@@ -27,12 +27,15 @@ public class UploadService {
     @Value("${uploadDirectory}")
     private String uploadDirectory;
 
-    @Autowired
     FileRepository fileRepository;
-    @Autowired
     UserRepository userRepository;
-    @Autowired
     PermissionRepository permissionRepository;
+
+    public UploadService(FileRepository fileRepository, PermissionRepository permissionRepository,UserRepository userRepository) {
+        this.fileRepository = fileRepository;
+        this.permissionRepository = permissionRepository;
+        this.userRepository = userRepository;
+    }
 
     public ResponseEntity<?> saveFile(MultipartFile file, String parentUuid) throws IOException {
 

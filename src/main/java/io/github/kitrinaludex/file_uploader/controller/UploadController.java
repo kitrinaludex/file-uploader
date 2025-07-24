@@ -13,8 +13,11 @@ import java.io.IOException;
 @RestController
 public class UploadController {
 
-    @Autowired
     UploadService uploadService;
+
+    public UploadController(UploadService uploadService) {
+        this.uploadService = uploadService;
+    }
 
     @PostMapping("/files")
     public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile

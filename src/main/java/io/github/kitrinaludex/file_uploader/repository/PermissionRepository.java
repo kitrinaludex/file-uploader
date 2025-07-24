@@ -8,8 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class PermissionRepository {
-@Autowired
+
     JdbcTemplate jdbcTemplate;
+
+    public PermissionRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public boolean hasAccessToFolder(String folderUuid) {
 

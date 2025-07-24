@@ -15,10 +15,13 @@ import java.util.UUID;
 @Repository
 public class FileRepository {
 
-    @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public void saveFile(String filename,String uuid,String username,String folderUuid,String path) {
+    public FileRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public void saveFile(String filename, String uuid, String username, String folderUuid, String path) {
         username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         String sql = "INSERT INTO files(name,uuid,owner,folder,path) VALUES(?,?,?,?,?)";

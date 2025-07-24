@@ -17,14 +17,11 @@ import java.util.List;
 @Service
 public class ViewService {
 
-
-    @Autowired
     FileRepository fileRepository;
-    @Autowired
-    JdbcUserDetailsService jdbcUserDetailsService;
-    @Autowired
-    UserRepository userRepository;
 
+    public ViewService(FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
+    }
 
     public FolderDto getFolder(String uuid) {
 

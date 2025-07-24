@@ -18,11 +18,13 @@ public class DownloadService {
     @Value("${uploadDirectory}")
     private String uploadDirectory;
 
-    @Autowired
     UserService userService;
-    @Autowired
     FileRepository fileRepository;
 
+    public DownloadService(FileRepository fileRepository, UserService userService) {
+        this.fileRepository = fileRepository;
+        this.userService = userService;
+    }
 
     public Resource download(String uuid) throws MalformedURLException {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
