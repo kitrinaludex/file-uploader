@@ -7,7 +7,6 @@ import io.github.kitrinaludex.file_uploader.model.User;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
 import io.github.kitrinaludex.file_uploader.repository.PermissionRepository;
 import io.github.kitrinaludex.file_uploader.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

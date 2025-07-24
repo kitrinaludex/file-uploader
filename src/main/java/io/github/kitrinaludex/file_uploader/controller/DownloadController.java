@@ -2,18 +2,15 @@ package io.github.kitrinaludex.file_uploader.controller;
 
 import io.github.kitrinaludex.file_uploader.service.DownloadService;
 import io.github.kitrinaludex.file_uploader.service.UserService;
+import java.net.MalformedURLException;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.MalformedURLException;
-import java.nio.file.Path;
 
 @RestController
 public class DownloadController {
+
     DownloadService downloadService;
     UserService userService;
 

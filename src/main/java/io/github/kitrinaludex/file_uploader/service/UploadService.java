@@ -6,19 +6,15 @@ import io.github.kitrinaludex.file_uploader.model.Folder;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
 import io.github.kitrinaludex.file_uploader.repository.PermissionRepository;
 import io.github.kitrinaludex.file_uploader.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

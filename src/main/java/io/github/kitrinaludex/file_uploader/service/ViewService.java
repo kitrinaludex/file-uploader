@@ -6,8 +6,6 @@ import io.github.kitrinaludex.file_uploader.exception.FolderCreationException;
 import io.github.kitrinaludex.file_uploader.exception.NoFolderAccessException;
 import io.github.kitrinaludex.file_uploader.model.Folder;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
-import io.github.kitrinaludex.file_uploader.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +41,7 @@ public class ViewService {
         }
 
         String name = folder.getName();
-        List<Folder> folders = fileRepository.getFolderList(uuid);;
+        List<Folder> folders = fileRepository.getFolderList(uuid);
         List<UserFile> files = fileRepository.getFileList(uuid);
 
         List<UserFile> convertedFolders = new ArrayList<>();

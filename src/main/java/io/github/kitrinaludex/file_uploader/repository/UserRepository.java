@@ -1,8 +1,6 @@
 package io.github.kitrinaludex.file_uploader.repository;
 
-import io.github.kitrinaludex.file_uploader.model.Folder;
 import io.github.kitrinaludex.file_uploader.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

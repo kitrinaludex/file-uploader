@@ -2,15 +2,12 @@ package io.github.kitrinaludex.file_uploader.repository;
 
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
 import io.github.kitrinaludex.file_uploader.model.Folder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public class FileRepository {
