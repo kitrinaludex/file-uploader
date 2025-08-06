@@ -3,9 +3,11 @@ package io.github.kitrinaludex.file_uploader.service;
 import io.github.kitrinaludex.file_uploader.dto.FolderDto;
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
 import io.github.kitrinaludex.file_uploader.exception.FolderCreationException;
+import io.github.kitrinaludex.file_uploader.exception.FolderNotFoundException;
 import io.github.kitrinaludex.file_uploader.exception.NoFolderAccessException;
 import io.github.kitrinaludex.file_uploader.model.Folder;
 import io.github.kitrinaludex.file_uploader.repository.FileRepository;
+import io.github.kitrinaludex.file_uploader.repository.PermissionRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,11 @@ import java.util.List;
 public class ViewService {
 
     FileRepository fileRepository;
+    PermissionRepository permissionRepository;
 
-    public ViewService(FileRepository fileRepository) {
+    public ViewService(FileRepository fileRepository, PermissionRepository permissionRepository) {
         this.fileRepository = fileRepository;
+        this.permissionRepository = permissionRepository;
     }
 
     public FolderDto getFolder(String uuid) {
@@ -32,11 +36,11 @@ public class ViewService {
 
 
         Folder folder = fileRepository.findFolderByUuid(uuid)
-                .orElseThrow(() -> new FolderCreationException("Folder not found"));
+                .orElseThrow(() -> new FolderNotFoundException("Folder not found"));
 
 
 
-        if (!(folder.getOwnerUuid().equals(username))) {
+        if (!(permissionRepository.hasAccessToFolder(uuid))) {
             throw new NoFolderAccessException("No folder access");
         }
 

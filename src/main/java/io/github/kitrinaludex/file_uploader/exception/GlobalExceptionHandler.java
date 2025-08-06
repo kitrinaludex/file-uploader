@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = NoFolderAccessException.class)
     public @ResponseBody ErrorResponse handleException(NoFolderAccessException ex) {
-        return ErrorResponse.builder(ex,HttpStatus.NOT_FOUND,ex.getMessage()).build();
+        return ErrorResponse.builder(ex,HttpStatus.FORBIDDEN,ex.getMessage()).build();
     }
 
     @ExceptionHandler(value = MalformedURLException.class)
