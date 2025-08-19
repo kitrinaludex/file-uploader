@@ -15,12 +15,20 @@ public class PermissionRepository {
 
     public boolean hasAccessToFolder(String folderUuid) {
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        while (folderUuid != null) {
 
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            String sql = "SELECT EXISTS ( SELECT * FROM folder_permissions WHERE username = ? AND folder_uuid = ? )";
 
-        String sql = "SELECT EXISTS ( SELECT * FROM folder_permissions WHERE username = ? AND folder_uuid = ? )";
+            if (Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, username, folderUuid))) {
+                return true;
+            }
 
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, username, folderUuid));
+            String sql2 = "SELECT parent_uuid FROM folders WHERE uuid = ?";
+            folderUuid = jdbcTemplate.queryForObject(sql2,String.class,folderUuid);
+        }
+
+        return false;
     }
 
     public void giveAccessToFolder(String username,String folderUuid) {

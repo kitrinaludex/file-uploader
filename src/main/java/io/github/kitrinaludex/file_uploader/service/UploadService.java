@@ -104,7 +104,6 @@ public class UploadService {
             new File( uploadDirectory + fileRepository.getRootByUsername(username) + newPath).mkdir();
 
             fileRepository.createFolder(name,uuid,parentUuid,newPath);
-            permissionRepository.giveAccessToFolder(username,uuid);
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
