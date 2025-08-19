@@ -2,7 +2,6 @@ package io.github.kitrinaludex.file_uploader.service;
 
 import io.github.kitrinaludex.file_uploader.dto.FolderDto;
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
-import io.github.kitrinaludex.file_uploader.exception.FolderCreationException;
 import io.github.kitrinaludex.file_uploader.exception.FolderNotFoundException;
 import io.github.kitrinaludex.file_uploader.exception.NoFolderAccessException;
 import io.github.kitrinaludex.file_uploader.model.Folder;
@@ -34,10 +33,8 @@ public class ViewService {
         }
 
 
-
         Folder folder = fileRepository.findFolderByUuid(uuid)
                 .orElseThrow(() -> new FolderNotFoundException("Folder not found"));
-
 
 
         if (!(permissionRepository.hasAccessToFolder(uuid))) {

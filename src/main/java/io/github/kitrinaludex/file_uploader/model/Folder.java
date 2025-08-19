@@ -2,8 +2,6 @@ package io.github.kitrinaludex.file_uploader.model;
 
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
 
-import java.time.Instant;
-
 public class Folder {
 
     private String uuid;
