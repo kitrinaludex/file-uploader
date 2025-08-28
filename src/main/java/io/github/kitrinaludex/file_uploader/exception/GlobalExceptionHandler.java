@@ -41,4 +41,9 @@ public class GlobalExceptionHandler {
         return ErrorResponse.builder(ex,HttpStatus.CONFLICT,ex.getMessage()).build();
     }
 
+    @ExceptionHandler(value = InvalidTokenException.class)
+    public @ResponseBody ErrorResponse handleException(InvalidTokenException ex) {
+        return ErrorResponse.builder(ex,HttpStatus.FORBIDDEN,ex.getMessage()).build();
+    }
+
 }

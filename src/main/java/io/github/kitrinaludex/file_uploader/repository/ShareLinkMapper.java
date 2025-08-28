@@ -19,9 +19,7 @@ public class ShareLinkMapper implements RowMapper<ShareLink> {
 //        folder.setPath(rs.getString("path"));
         shareLink.setFolderUuid(rs.getString("folder_uuid"));
         shareLink.setToken(rs.getString("token"));
-        shareLink.setActive(rs.getBoolean("active"));
         shareLink.setCreatedBy(rs.getString("created_by"));
-        shareLink.setPermissionLevel("permission_level");
         return shareLink;
     }
 }

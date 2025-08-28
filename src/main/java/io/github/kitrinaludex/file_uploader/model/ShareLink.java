@@ -7,45 +7,15 @@ public class ShareLink {
     private String folderUuid;
     private String createdBy;
     private LocalDateTime createdAt;
-    private LocalDateTime expiresAt;
-    private String permissionLevel;
-    private boolean isActive = true;
 
-    public ShareLink(LocalDateTime expiresAt, String folderUuid, boolean isActive, String permissionLevel, String token) {
-        this.expiresAt = expiresAt;
-        this.folderUuid = folderUuid;
-        this.isActive = isActive;
-        this.permissionLevel = permissionLevel;
-        this.token = token;
-    }
-
-
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public ShareLink(LocalDateTime createdAt, String createdBy, String folderUuid, String token) {
         this.createdAt = createdAt;
-    }
-
-    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
-    }
-
-    public void setExpiresAt(LocalDateTime expiresAt) {
-        this.expiresAt = expiresAt;
-    }
-
-    public void setFolderUuid(String folderUuid) {
         this.folderUuid = folderUuid;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public void setPermissionLevel(String permissionLevel) {
-        this.permissionLevel = permissionLevel;
-    }
-
-    public void setToken(String token) {
         this.token = token;
+    }
+
+    public ShareLink() {
     }
 
     public LocalDateTime getCreatedAt() {
@@ -56,31 +26,27 @@ public class ShareLink {
         return createdBy;
     }
 
-    public LocalDateTime getExpiresAt() {
-        return expiresAt;
-    }
-
     public String getFolderUuid() {
         return folderUuid;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public String getPermissionLevel() {
-        return permissionLevel;
     }
 
     public String getToken() {
         return token;
     }
 
-
-    public ShareLink() {
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    private boolean isValid() {
-        return isActive;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setFolderUuid(String folderUuid) {
+        this.folderUuid = folderUuid;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

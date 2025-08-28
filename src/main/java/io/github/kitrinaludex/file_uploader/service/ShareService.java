@@ -1,5 +1,6 @@
 package io.github.kitrinaludex.file_uploader.service;
 
+import io.github.kitrinaludex.file_uploader.exception.InvalidTokenException;
 import io.github.kitrinaludex.file_uploader.exception.NoFolderAccessException;
 import io.github.kitrinaludex.file_uploader.exception.UsernameAlreadyExistsException;
 import io.github.kitrinaludex.file_uploader.model.ShareLink;
@@ -31,9 +32,6 @@ public class ShareService {
         shareLink.setFolderUuid(folderUuid);
         shareLink.setCreatedBy(username);
         shareLink.setCreatedAt(LocalDateTime.now());
-        shareLink.setExpiresAt(LocalDateTime.MAX);
-        shareLink.setPermissionLevel("Admin");
-        shareLink.setActive(true);
 
         permissionRepository.saveShareLink(shareLink);
 
@@ -64,7 +62,7 @@ public class ShareService {
     public void receiveInvite(String token) {
 
         if (!permissionRepository.tokenExists(token)) {
-            throw new UsernameAlreadyExistsException("asdf");
+            throw new InvalidTokenException("Token does not exist");
         }
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

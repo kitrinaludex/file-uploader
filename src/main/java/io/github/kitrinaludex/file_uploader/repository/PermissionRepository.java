@@ -54,10 +54,10 @@ public class PermissionRepository {
 
     public void saveShareLink(ShareLink shareLink) {
 
-        String sql = "INSERT INTO invite_links(token,created_by,folder_uuid,permission_level,active)" +
-                "VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO invite_links(token,created_by,folder_uuid)" +
+                "VALUES (?,?,?)";
         jdbcTemplate.update(sql,shareLink.getToken(),shareLink.getCreatedBy(),
-                shareLink.getFolderUuid(),shareLink.getPermissionLevel(),true);
+                shareLink.getFolderUuid());
     }
 
     public ShareLink getShareLink(String token) {

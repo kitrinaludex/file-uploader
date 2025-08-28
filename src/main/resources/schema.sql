@@ -28,6 +28,4 @@ folder_uuid TEXT);
 CREATE TABLE invite_links(
 token TEXT PRIMARY KEY,
 created_by TEXT,
-folder_uuid TEXT,
-permission_level TEXT,
-active BOOLEAN);
+folder_uuid TEXT);
