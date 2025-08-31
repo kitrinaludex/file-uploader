@@ -22,4 +22,5 @@ public class JdbcUserDetailsService implements UserDetailsService {
         User user = userRepository.getUserByUsername(username);
         return new SecurityUser(user);
     }
+
 }

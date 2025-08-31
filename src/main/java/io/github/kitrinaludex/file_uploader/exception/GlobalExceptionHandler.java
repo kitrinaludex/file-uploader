@@ -1,6 +1,7 @@
 package io.github.kitrinaludex.file_uploader.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -43,6 +44,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = InvalidTokenException.class)
     public @ResponseBody ErrorResponse handleException(InvalidTokenException ex) {
+        return ErrorResponse.builder(ex,HttpStatus.FORBIDDEN,ex.getMessage()).build();
+    }
+
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public @ResponseBody ErrorResponse handleException(UsernameNotFoundException ex) {
         return ErrorResponse.builder(ex,HttpStatus.FORBIDDEN,ex.getMessage()).build();
     }
 
