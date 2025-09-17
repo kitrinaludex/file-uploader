@@ -2,6 +2,8 @@ package io.github.kitrinaludex.file_uploader.model;
 
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
 
+import java.sql.Timestamp;
+
 public class Folder {
 
     private String uuid;
@@ -9,17 +11,12 @@ public class Folder {
     private String parentUuid;
     private String ownerUuid;
     private String path;
+    private Timestamp creationDate;
+    private Timestamp editDate;
 
     public Folder() {
     }
 
-    public Folder(String name, String ownerUuid, String parentUuid, String path, String uuid) {
-        this.name = name;
-        this.ownerUuid = ownerUuid;
-        this.parentUuid = parentUuid;
-        this.path = path;
-        this.uuid = uuid;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -61,7 +58,23 @@ public class Folder {
         return uuid;
     }
 
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Timestamp getEditDate() {
+        return editDate;
+    }
+
+    public void setEditDate(Timestamp editDate) {
+        this.editDate = editDate;
+    }
+
     public UserFile toDto() {
-        return new UserFile(getName(),"folder",getUuid());
+        return new UserFile(getName(),"folder",getUuid(),getCreationDate(),getEditDate(), 0L);
     }
 }

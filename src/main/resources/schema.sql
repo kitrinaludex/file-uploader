@@ -11,14 +11,19 @@ uuid TEXT PRIMARY KEY,
 name TEXT,
 owner TEXT,
 folder TEXT,
-path TEXT);
+path TEXT,
+file_size DECIMAL,
+creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+edit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
 
 CREATE TABLE folders(
 uuid TEXT PRIMARY KEY,
 name TEXT,
 owner TEXT,
 parent_uuid TEXT,
-path TEXT);
+path TEXT,
+creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+edit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
 
 CREATE TABLE folder_permissions(
 id SERIAL PRIMARY KEY,

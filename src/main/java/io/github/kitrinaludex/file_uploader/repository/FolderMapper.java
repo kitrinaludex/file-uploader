@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class FolderMapper implements RowMapper<Folder> {
 
@@ -16,6 +18,8 @@ public class FolderMapper implements RowMapper<Folder> {
         folder.setOwnerUuid(rs.getString("owner"));
         folder.setParentUuid(rs.getString("parent_uuid"));
         folder.setPath(rs.getString("path"));
+        folder.setCreationDate(rs.getTimestamp("creation_date"));
+        folder.setEditDate(rs.getTimestamp("edit_date"));
         return folder;
     }
 }

@@ -19,8 +19,14 @@ public class FileViewController {
         this.viewService = viewService;
     }
 
+    @GetMapping("/uuid")
+    public ResponseEntity<?> getRootUuid() {
+        return ResponseEntity.ok().body(userService.getRootUuid(SecurityContextHolder.getContext().getAuthentication().getName()));
+    }
+
     @GetMapping("/files")
     public ResponseEntity<?> getFolder(@RequestParam(required = false) String folder){
+        System.out.println(folder);
 
         if (folder == null) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();

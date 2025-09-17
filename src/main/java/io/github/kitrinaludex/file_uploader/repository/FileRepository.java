@@ -18,11 +18,11 @@ public class FileRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void saveFile(String filename, String uuid, String username, String folderUuid, String path) {
+    public void saveFile(String filename, String uuid, String username, String folderUuid, String path,long size) {
         username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        String sql = "INSERT INTO files(name,uuid,owner,folder,path) VALUES(?,?,?,?,?)";
-        jdbcTemplate.update(sql,filename,uuid,username,folderUuid,path);
+        String sql = "INSERT INTO files(name,uuid,owner,folder,path,file_size) VALUES(?,?,?,?,?,?)";
+        jdbcTemplate.update(sql,filename,uuid,username,folderUuid,path,size);
     }
 
 
@@ -32,6 +32,12 @@ public class FileRepository {
         String sql = "INSERT INTO folders(name,uuid,parent_uuid,path,owner) VALUES(?,?,?,?,?)";
 
         jdbcTemplate.update(sql,name,uuid,parentUuid,path,username);
+    }
+
+    public void renameFolder(String name,String uuid) {
+        String sql = "UPDATE folders SET name = ? WHERE uuid = ?";
+
+        jdbcTemplate.update(sql,name,uuid);
     }
 
     public void createRoot(String username,String name,String uuid,String parentUuid,String path){

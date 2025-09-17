@@ -27,8 +27,7 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
 
         );
-        http.formLogin(form -> form
-                .defaultSuccessUrl("/home"));
+        http.formLogin(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
         http.httpBasic(Customizer.withDefaults());
         http.cors(httpSecurityCorsConfigurer -> {

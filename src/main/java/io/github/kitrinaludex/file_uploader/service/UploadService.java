@@ -61,8 +61,9 @@ public class UploadService {
         try {
 
             file.transferTo(new File(uploadDirectory + rootUuid + parentPath + uuid));
-            fileRepository.saveFile(file.getOriginalFilename(),uuid,username,parentUuid,parentPath);
+            fileRepository.saveFile(file.getOriginalFilename(),uuid,username,parentUuid,parentPath,file.getSize());
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -110,5 +111,15 @@ public class UploadService {
 
         return uuid;
 }
+
+    public void renameFolder(String name,String uuid) {
+        if (!(permissionRepository.hasAccessToFolder(uuid))) {
+            throw new NoFolderAccessException("No access to folder");
+        }
+
+        fileRepository.renameFolder(name,uuid);
+
+        //if folder exists and user has access, rename it
+    }
 
 }

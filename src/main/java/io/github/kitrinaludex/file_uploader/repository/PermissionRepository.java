@@ -21,7 +21,6 @@ public class PermissionRepository {
         while (folderUuid != null) {
 
             String sql = "SELECT EXISTS ( SELECT * FROM folder_permissions WHERE username = ? AND folder_uuid = ? )";
-            System.out.println(folderUuid);
             if (Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, username, folderUuid))) {
                 return true;
             }
