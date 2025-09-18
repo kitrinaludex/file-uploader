@@ -1,5 +1,8 @@
 package io.github.kitrinaludex.file_uploader.service;
 
+import io.github.kitrinaludex.file_uploader.dto.UserFile;
+import io.github.kitrinaludex.file_uploader.exception.FileDeletionException;
+import io.github.kitrinaludex.file_uploader.exception.FileNotFoundException;
 import io.github.kitrinaludex.file_uploader.exception.FolderNotFoundException;
 import io.github.kitrinaludex.file_uploader.exception.NoFolderAccessException;
 import io.github.kitrinaludex.file_uploader.model.Folder;
@@ -122,4 +125,54 @@ public class UploadService {
         //if folder exists and user has access, rename it
     }
 
-}
+    public void renameFile(String name,String uuid) {
+        if (!(permissionRepository.hasAccessToFolder(fileRepository.getFileFolder(uuid).get()))) {
+            throw new NoFolderAccessException("No access to folder");
+        }
+
+        fileRepository.renameFile(name,uuid);
+    }
+
+    public void deleteFile(String uuid) {
+
+        String parentUuid = fileRepository.getFileFolder(uuid).orElseThrow(()
+                -> new FileNotFoundException("File not found"));
+
+        if (!(permissionRepository.hasAccessToFolder(parentUuid))) {
+            throw new NoFolderAccessException("No access to folder");
+        }
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        File fileToDelete = new File(uploadDirectory + fileRepository.getRootByUsername(username) + "/" + fileRepository.getFilePath(uuid).get() + uuid);
+        System.out.println(uploadDirectory + fileRepository.getRootByUsername(username) + "/" + fileRepository.getFilePath(uuid).get() + uuid);
+
+        System.out.println(fileToDelete.canRead());
+
+        if (fileToDelete.delete()) {
+            fileRepository.deleteFile(uuid);
+        }else {
+            throw new FileDeletionException("unable to delete file");
+        }
+
+    }
+
+    public void deleteFolder(String uuid) {
+
+        if (!(permissionRepository.hasAccessToFolder(uuid))) {
+            throw new NoFolderAccessException("No access to folder");
+        }
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        File fileToDelete = new File(uploadDirectory + fileRepository.getRootByUsername(username) + "/" + fileRepository.getFolderPath(uuid).get());
+
+        if (fileToDelete.delete()) {
+            fileRepository.deleteFolder(uuid);
+        }else {
+            throw new FileDeletionException("unable to delete folder");
+        }
+    }
+
+
+
+
+ }

@@ -34,12 +34,6 @@ public class FileRepository {
         jdbcTemplate.update(sql,name,uuid,parentUuid,path,username);
     }
 
-    public void renameFolder(String name,String uuid) {
-        String sql = "UPDATE folders SET name = ? WHERE uuid = ?";
-
-        jdbcTemplate.update(sql,name,uuid);
-    }
-
     public void createRoot(String username,String name,String uuid,String parentUuid,String path){
 
         String sql = "INSERT INTO folders(name,uuid,parent_uuid,path,owner) VALUES(?,?,?,?,?)";
@@ -99,10 +93,48 @@ public class FileRepository {
         String sql = "SELECT folder FROM files WHERE uuid = ?";
 
 
+
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql,String.class,uuid));
         }catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    public void deleteFile(String uuid) {
+        String sql = "DELETE FROM files WHERE uuid = ?";
+
+        jdbcTemplate.update(sql,uuid);
+
+    }
+
+    public void deleteFolder(String uuid) {
+        String sql = "DELETE FROM folders WHERE uuid = ?";
+
+        jdbcTemplate.update(sql,uuid);
+
+    }
+
+    public Optional<String> getFolderPath(String uuid) {
+        String sql = "SELECT path FROM folders WHERE uuid = ?";
+
+
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql,String.class,uuid));
+        }catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    public void renameFile(String name, String uuid) {
+        String sql = "UPDATE files SET name = ? WHERE uuid = ?";
+
+        jdbcTemplate.update(sql,name,uuid);
+    }
+
+    public void renameFolder(String name,String uuid) {
+        String sql = "UPDATE folders SET name = ? WHERE uuid = ?";
+
+        jdbcTemplate.update(sql,name,uuid);
     }
 }

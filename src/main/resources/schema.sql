@@ -6,24 +6,28 @@ username TEXT,
 password TEXT,
 root_folder_uuid TEXT);
 
-CREATE TABLE files(
-uuid TEXT PRIMARY KEY,
-name TEXT,
-owner TEXT,
-folder TEXT,
-path TEXT,
-file_size DECIMAL,
-creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-edit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
-
 CREATE TABLE folders(
 uuid TEXT PRIMARY KEY,
 name TEXT,
 owner TEXT,
-parent_uuid TEXT,
+parent_uuid TEXT NULL,
 path TEXT,
 creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-edit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+edit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY(parent_uuid) REFERENCES folders(uuid) ON DELETE CASCADE
+);
+
+CREATE TABLE files(
+uuid TEXT PRIMARY KEY,
+name TEXT,
+owner TEXT,
+folder TEXT NOT NULL,
+path TEXT,
+file_size DECIMAL,
+creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+edit_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY(folder) REFERENCES folders(uuid) ON DELETE CASCADE
+);
 
 CREATE TABLE folder_permissions(
 id SERIAL PRIMARY KEY,

@@ -4,9 +4,7 @@ import io.github.kitrinaludex.file_uploader.service.UserService;
 import io.github.kitrinaludex.file_uploader.service.ViewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FileViewController {
@@ -26,7 +24,6 @@ public class FileViewController {
 
     @GetMapping("/files")
     public ResponseEntity<?> getFolder(@RequestParam(required = false) String folder){
-        System.out.println(folder);
 
         if (folder == null) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();

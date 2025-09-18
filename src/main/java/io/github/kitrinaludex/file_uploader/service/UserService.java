@@ -46,7 +46,7 @@ public class UserService {
             throw new FolderCreationException("couldn't create user root folder");
         }
         fileRepository.createRoot(signupRequest.getUsername(),"Мои файлы",
-                rootUuid,"","/" );
+                rootUuid,null,"/" );
 
         User user = new User(
                 UUID.randomUUID().toString(),
