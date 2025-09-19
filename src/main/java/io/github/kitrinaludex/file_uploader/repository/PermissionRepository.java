@@ -5,63 +5,64 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.jdbc.core.RowMapper;
 
 @Repository
 public class PermissionRepository {
 
-    JdbcTemplate jdbcTemplate;
+  JdbcTemplate jdbcTemplate;
 
-    public PermissionRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+  public PermissionRepository(JdbcTemplate jdbcTemplate) {
+    this.jdbcTemplate = jdbcTemplate;
+  }
 
-    public boolean hasAccessToFolder(String folderUuid) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        while (folderUuid != null) {
+  public boolean hasAccessToFolder(String folderUuid) {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    while (folderUuid != null) {
 
-            String sql = "SELECT EXISTS ( SELECT * FROM folder_permissions WHERE username = ? AND folder_uuid = ? )";
-            if (Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, username, folderUuid))) {
-                return true;
-            }
-
-            try {
-
-                String sql2 = "SELECT parent_uuid FROM folders WHERE uuid = ?";
-                folderUuid = jdbcTemplate.queryForObject(sql2,String.class,folderUuid);
-            }catch (EmptyResultDataAccessException e) {
-                return false;
-            }
-        }
-
+      String sql =
+          "SELECT EXISTS ( SELECT * FROM folder_permissions WHERE username = ? AND folder_uuid = ? )";
+      if (Boolean.TRUE.equals(
+          jdbcTemplate.queryForObject(sql, Boolean.class, username, folderUuid))) {
         return true;
+      }
+
+      try {
+
+        String sql2 = "SELECT parent_uuid FROM folders WHERE uuid = ?";
+        folderUuid = jdbcTemplate.queryForObject(sql2, String.class, folderUuid);
+      } catch (EmptyResultDataAccessException e) {
+        return false;
+      }
     }
 
-    public void giveAccessToFolder(String username,String folderUuid) {
+    return true;
+  }
 
-        String sql = "INSERT INTO folder_permissions(username,folder_uuid) VALUES(?,?)";
+  public void giveAccessToFolder(String username, String folderUuid) {
 
-        jdbcTemplate.update(sql,username,folderUuid);
-    }
+    String sql = "INSERT INTO folder_permissions(username,folder_uuid) VALUES(?,?)";
 
-    public boolean tokenExists(String token) {
+    jdbcTemplate.update(sql, username, folderUuid);
+  }
 
-        String sql = "SELECT EXISTS ( SELECT * FROM invite_links WHERE token = ?)";
+  public boolean tokenExists(String token) {
 
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, token));
-    }
+    String sql = "SELECT EXISTS ( SELECT * FROM invite_links WHERE token = ?)";
 
-    public void saveShareLink(ShareLink shareLink) {
+    return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, token));
+  }
 
-        String sql = "INSERT INTO invite_links(token,created_by,folder_uuid)" +
-                "VALUES (?,?,?)";
-        jdbcTemplate.update(sql,shareLink.getToken(),shareLink.getCreatedBy(),
-                shareLink.getFolderUuid());
-    }
+  public void saveShareLink(ShareLink shareLink) {
 
-    public ShareLink getShareLink(String token) {
+    String sql = "INSERT INTO invite_links(token,created_by,folder_uuid)" +
+        "VALUES (?,?,?)";
+    jdbcTemplate.update(sql, shareLink.getToken(), shareLink.getCreatedBy(),
+        shareLink.getFolderUuid());
+  }
 
-        String sql = "SELECT * FROM invite_links WHERE token = ?";
-        return jdbcTemplate.queryForObject(sql,new ShareLinkMapper(),token);
-    }
+  public ShareLink getShareLink(String token) {
+
+    String sql = "SELECT * FROM invite_links WHERE token = ?";
+    return jdbcTemplate.queryForObject(sql, new ShareLinkMapper(), token);
+  }
 }

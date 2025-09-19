@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class JdbcUserDetailsService implements UserDetailsService {
 
-    UserRepository userRepository;
+  UserRepository userRepository;
 
-    public JdbcUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+  public JdbcUserDetailsService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.getUserByUsername(username);
-        return new SecurityUser(user);
-    }
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userRepository.getUserByUsername(username);
+    return new SecurityUser(user);
+  }
 
 }

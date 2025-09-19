@@ -15,22 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    UserService userService;
-    JdbcUserDetailsService jdbcUserDetailsService;
+  UserService userService;
+  JdbcUserDetailsService jdbcUserDetailsService;
 
-    public AuthController(UserService userService,JdbcUserDetailsService jdbcUserDetailsService) {
-        this.jdbcUserDetailsService = jdbcUserDetailsService;
-        this.userService = userService;
-    }
+  public AuthController(UserService userService, JdbcUserDetailsService jdbcUserDetailsService) {
+    this.jdbcUserDetailsService = jdbcUserDetailsService;
+    this.userService = userService;
+  }
 
-    @GetMapping("/login")
-    public ResponseEntity<?> login(){
-        jdbcUserDetailsService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        return ResponseEntity.ok().build();
-    }
+  @GetMapping("/login")
+  public ResponseEntity<?> login() {
+    jdbcUserDetailsService.loadUserByUsername(
+        SecurityContextHolder.getContext().getAuthentication().getName());
+    return ResponseEntity.ok().build();
+  }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signupRequest) throws Exception {
-        return userService.registerUser(signupRequest);
-    }
+  @PostMapping("/register")
+  public ResponseEntity<?> register(@Valid @RequestBody SignupRequest signupRequest)
+      throws Exception {
+    return userService.registerUser(signupRequest);
+  }
 }

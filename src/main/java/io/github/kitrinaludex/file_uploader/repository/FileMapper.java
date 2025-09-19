@@ -1,17 +1,17 @@
 package io.github.kitrinaludex.file_uploader.repository;
 
 import io.github.kitrinaludex.file_uploader.dto.UserFile;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class FileMapper implements RowMapper<UserFile> {
-    @Value("hostUrl")
+  @Value("hostUrl")
 
-    @Override
-    public UserFile mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new UserFile(rs.getString("name"),"file",rs.getString("uuid"),rs.getTimestamp("creation_date"),rs.getTimestamp("edit_date"),rs.getLong("file_size"));
-    }
+  @Override
+  public UserFile mapRow(ResultSet rs, int rowNum) throws SQLException {
+    return new UserFile(rs.getString("name"), "file", rs.getString("uuid"),
+        rs.getTimestamp("creation_date"), rs.getTimestamp("edit_date"), rs.getLong("file_size"));
+  }
 }
