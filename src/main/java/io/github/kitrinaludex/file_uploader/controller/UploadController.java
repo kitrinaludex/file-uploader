@@ -3,9 +3,9 @@ package io.github.kitrinaludex.file_uploader.controller;
 import io.github.kitrinaludex.file_uploader.service.UploadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 
 @RestController
 public class UploadController {
@@ -14,6 +14,7 @@ public class UploadController {
 
     public UploadController(UploadService uploadService) {
         this.uploadService = uploadService;
+        System.out.println("sexo");
     }
 
     @PostMapping("/files")

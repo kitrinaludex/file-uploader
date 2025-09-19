@@ -34,11 +34,15 @@ public class SecurityConfig {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.setAllowedOrigins(List.of("*"));
             configuration.setAllowedMethods(List.of("*"));
+
             configuration.setAllowedHeaders(List.of("*"));
+            configuration.setAllowedOrigins(List.of("*"));
+//            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://kitrina-hosting.ru","http://kitrina-hosting.ru/"));
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             source.registerCorsConfiguration("/**",configuration);
             httpSecurityCorsConfigurer.configurationSource(source);
         });
+
 
         return http.build();
     }

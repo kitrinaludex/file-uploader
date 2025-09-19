@@ -127,13 +127,13 @@ public class FileRepository {
     }
 
     public void renameFile(String name, String uuid) {
-        String sql = "UPDATE files SET name = ? WHERE uuid = ?";
+        String sql = "UPDATE files SET name = ?,edit_date = CURRENT_TIMESTAMP WHERE uuid = ?";
 
         jdbcTemplate.update(sql,name,uuid);
     }
 
     public void renameFolder(String name,String uuid) {
-        String sql = "UPDATE folders SET name = ? WHERE uuid = ?";
+        String sql = "UPDATE folders SET name = ?,edit_date = CURRENT_TIMESTAMP WHERE uuid = ?";
 
         jdbcTemplate.update(sql,name,uuid);
     }
