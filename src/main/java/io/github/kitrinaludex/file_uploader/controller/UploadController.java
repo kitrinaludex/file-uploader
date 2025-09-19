@@ -19,7 +19,6 @@ public class UploadController {
 
   public UploadController(UploadService uploadService) {
     this.uploadService = uploadService;
-    System.out.println("sexo");
   }
 
   @PostMapping("/files")

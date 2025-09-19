@@ -17,13 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+  FileRepository fileRepository;
+  PermissionRepository permissionRepository;
   @Value("${uploadDirectory}")
   private String uploadDirectory;
-
-  private final UserRepository userRepository;
-  FileRepository fileRepository;
-  private final PasswordEncoder passwordEncoder;
-  PermissionRepository permissionRepository;
 
   public UserService(FileRepository fileRepository, PasswordEncoder passwordEncoder,
                      PermissionRepository permissionRepository, UserRepository userRepository) {

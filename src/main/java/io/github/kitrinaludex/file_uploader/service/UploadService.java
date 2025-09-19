@@ -21,12 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadService {
 
-  @Value("${uploadDirectory}")
-  private String uploadDirectory;
-
   FileRepository fileRepository;
   UserRepository userRepository;
   PermissionRepository permissionRepository;
+  @Value("${uploadDirectory}")
+  private String uploadDirectory;
 
   public UploadService(FileRepository fileRepository, PermissionRepository permissionRepository,
                        UserRepository userRepository) {
@@ -121,8 +120,6 @@ public class UploadService {
     }
 
     fileRepository.renameFolder(name, uuid);
-
-    //if folder exists and user has access, rename it
   }
 
   public void renameFile(String name, String uuid) {

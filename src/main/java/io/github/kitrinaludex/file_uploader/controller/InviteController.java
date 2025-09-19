@@ -1,6 +1,5 @@
 package io.github.kitrinaludex.file_uploader.controller;
 
-import io.github.kitrinaludex.file_uploader.service.ShareService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

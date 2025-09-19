@@ -1,6 +1,5 @@
 package io.github.kitrinaludex.file_uploader.repository;
 
-import io.github.kitrinaludex.file_uploader.model.ShareLink;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,17 +51,4 @@ public class PermissionRepository {
     return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, token));
   }
 
-  public void saveShareLink(ShareLink shareLink) {
-
-    String sql = "INSERT INTO invite_links(token,created_by,folder_uuid)" +
-        "VALUES (?,?,?)";
-    jdbcTemplate.update(sql, shareLink.getToken(), shareLink.getCreatedBy(),
-        shareLink.getFolderUuid());
-  }
-
-  public ShareLink getShareLink(String token) {
-
-    String sql = "SELECT * FROM invite_links WHERE token = ?";
-    return jdbcTemplate.queryForObject(sql, new ShareLinkMapper(), token);
-  }
 }

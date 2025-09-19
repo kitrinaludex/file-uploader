@@ -22,7 +22,6 @@ public class SecurityConfig {
 
     http.authorizeHttpRequests(auth -> auth
         .anyRequest().permitAll()
-
     );
     http.formLogin(AbstractHttpConfigurer::disable);
     http.csrf(AbstractHttpConfigurer::disable);
@@ -38,7 +37,6 @@ public class SecurityConfig {
       source.registerCorsConfiguration("/**", configuration);
       httpSecurityCorsConfigurer.configurationSource(source);
     });
-
 
     return http.build();
   }

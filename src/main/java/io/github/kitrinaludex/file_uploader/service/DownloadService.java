@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DownloadService {
-  @Value("${uploadDirectory}")
-  private String uploadDirectory;
 
   UserService userService;
   FileRepository fileRepository;
   PermissionRepository permissionRepository;
+  @Value("${uploadDirectory}")
+  private String uploadDirectory;
 
   public DownloadService(FileRepository fileRepository, UserService userService,
                          PermissionRepository permissionRepository) {

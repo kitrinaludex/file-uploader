@@ -16,45 +16,44 @@ public class Folder {
   public Folder() {
   }
 
+  public String getName() {
+    return name;
+  }
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public void setOwnerUuid(String ownerUuid) {
-    this.ownerUuid = ownerUuid;
-  }
-
-  public void setParentUuid(String parentUuid) {
-    this.parentUuid = parentUuid;
-  }
-
-  public void setPath(String path) {
-    this.path = path;
-  }
-
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
-
-  public String getName() {
-    return name;
   }
 
   public String getOwnerUuid() {
     return ownerUuid;
   }
 
+  public void setOwnerUuid(String ownerUuid) {
+    this.ownerUuid = ownerUuid;
+  }
+
   public String getParentUuid() {
     return parentUuid;
+  }
+
+  public void setParentUuid(String parentUuid) {
+    this.parentUuid = parentUuid;
   }
 
   public String getPath() {
     return path;
   }
 
+  public void setPath(String path) {
+    this.path = path;
+  }
+
   public String getUuid() {
     return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 
   public Timestamp getCreationDate() {

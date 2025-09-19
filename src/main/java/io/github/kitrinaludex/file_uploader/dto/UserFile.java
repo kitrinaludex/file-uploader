@@ -37,6 +37,10 @@ public class UserFile {
     return editDate;
   }
 
+  public void setEditDate(Timestamp editDate) {
+    this.editDate = editDate;
+  }
+
   public long getFileSize() {
     return fileSize;
   }
@@ -45,20 +49,12 @@ public class UserFile {
     this.fileSize = fileSize;
   }
 
-  public void setEditDate(Timestamp editDate) {
-    this.editDate = editDate;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public String getUuid() {
+    return uuid;
   }
 
   public void setUuid(String uuid) {
     this.uuid = uuid;
-  }
-
-  public String getUuid() {
-    return uuid;
   }
 
   public String getType() {
@@ -71,6 +67,10 @@ public class UserFile {
 
   public String getName() {
     return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
 }
