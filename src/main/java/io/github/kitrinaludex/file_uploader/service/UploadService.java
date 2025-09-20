@@ -60,8 +60,8 @@ public class UploadService {
     String uuid = UUID.randomUUID().toString();
 
     try {
-
-      file.transferTo(new File(uploadDirectory + rootUuid + parentPath + uuid));
+      File toUpload = new File(uploadDirectory + rootUuid + parentPath + uuid);
+      file.transferTo(toUpload.getAbsoluteFile());
       fileRepository.saveFile(file.getOriginalFilename(), uuid, username, parentUuid, parentPath,
           file.getSize());
     } catch (Exception e) {
