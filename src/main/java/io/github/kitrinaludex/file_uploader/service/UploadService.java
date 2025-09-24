@@ -11,6 +11,7 @@ import io.github.kitrinaludex.file_uploader.repository.UserRepository;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -166,11 +167,13 @@ public class UploadService {
     File fileToDelete = new File(
         uploadDirectory + fileRepository.getRootByUsername(username) + "/" +
             fileRepository.getFolderPath(uuid).get());
+    System.out.println(fileToDelete.getAbsolutePath());
 
-    if (fileToDelete.delete()) {
+    try {
+      FileUtils.deleteDirectory(fileToDelete);
       fileRepository.deleteFolder(uuid);
-    } else {
-      throw new FileDeletionException("unable to delete folder");
+    }catch (Exception e) {
+      throw new FileDeletionException("unable to delete folder" + fileToDelete.getAbsolutePath());
     }
   }
 

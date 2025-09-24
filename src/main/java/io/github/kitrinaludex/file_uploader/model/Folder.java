@@ -75,4 +75,17 @@ public class Folder {
   public UserFile toDto() {
     return new UserFile(getName(), "folder", getUuid(), getCreationDate(), getEditDate(), 0L);
   }
+
+  @Override
+  public String toString() {
+    return "Folder{" +
+        "creationDate=" + creationDate +
+        ", uuid='" + uuid + '\'' +
+        ", name='" + name + '\'' +
+        ", parentUuid='" + parentUuid + '\'' +
+        ", ownerUuid='" + ownerUuid + '\'' +
+        ", path='" + path + '\'' +
+        ", editDate=" + editDate +
+        '}';
+  }
 }

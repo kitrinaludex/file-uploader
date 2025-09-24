@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-  @GetMapping("/")
+  @GetMapping("/test")
   public ResponseEntity<String> test() {
-    return ResponseEntity.ok(SecurityContextHolder.getContext().getAuthentication().getName());
+    return ResponseEntity.ok().build();
   }
 }
