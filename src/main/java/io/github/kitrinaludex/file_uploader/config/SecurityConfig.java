@@ -21,7 +21,8 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
     http.authorizeHttpRequests(auth -> auth
-        .anyRequest().permitAll()
+        .requestMatchers("/register").permitAll()
+        .anyRequest().authenticated()
     );
     http.formLogin(AbstractHttpConfigurer::disable);
     http.csrf(AbstractHttpConfigurer::disable);
@@ -32,7 +33,6 @@ public class SecurityConfig {
       configuration.setAllowedMethods(List.of("*"));
       configuration.setAllowedHeaders(List.of("*"));
       configuration.setAllowedOrigins(List.of("*"));
-//            configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://kitrina-hosting.ru","http://kitrina-hosting.ru/"));
       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
       source.registerCorsConfiguration("/**", configuration);
       httpSecurityCorsConfigurer.configurationSource(source);
